@@ -1,0 +1,532 @@
+﻿/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========== CSS 变量 ========== */
+:root {
+    --bg-top: #03060d;
+    --bg-bottom: #080d18;
+    --panel-bg: linear-gradient(180deg, rgba(13,21,38,0.92), rgba(18,29,49,0.88));
+    --panel-line: rgba(130,162,214,0.22);
+    --text-main: #f4f7ff;
+    --text-dim: #8ea2c7;
+    --accent: #f2c86f;
+    --accent-soft: rgba(242,200,111,0.2);
+}
+
+/* ========== 页面基础 ========== */
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: radial-gradient(circle at 50% 30%, rgba(49,72,119,0.14), transparent 36%),
+                linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+    color: var(--text-main);
+}
+body {
+    position: relative;
+}
+
+/* ========== Canvas 层叠 ========== */
+#stars {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+#scene {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+/* ========== 左面板 ========== */
+.panel-left {
+    display: none;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 18px;
+    width: 290px;
+    max-height: calc(100vh - 120px);
+    z-index: 25;
+    padding: 16px;
+    border: 1px solid var(--panel-line);
+    border-radius: 30px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 22px 60px rgba(0,0,0,0.42);
+    overflow-y: auto;
+}
+
+/* ========== 右面板 ========== */
+.panel-right {
+    display: none;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 18px;
+    width: 430px;
+    max-height: calc(100vh - 120px);
+    z-index: 25;
+    padding: 16px;
+    border: 1px solid var(--panel-line);
+    border-radius: 30px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 22px 60px rgba(0,0,0,0.42);
+    overflow-y: auto;
+}
+
+/* ========== 行星头图 ========== */
+.planet-hero {
+    overflow: hidden;
+    border: 1px solid rgba(242,200,111,0.28);
+    border-radius: 18px;
+    background: #000;
+}
+.planet-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    background: #020307;
+}
+.planet-hero-copy {
+    padding: 12px 14px;
+    background: rgba(24,34,54,0.96);
+}
+.planet-hero-copy p {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+.planet-hero-copy h1 {
+    margin-top: 6px;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+/* ========== 面板标题 ========== */
+.panel-title {
+    margin-top: 14px;
+    margin-bottom: 10px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* ========== 属性网格 ========== */
+.props-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+/* ========== 属性卡片 ========== */
+.prop-card {
+    min-height: 88px;
+    border-radius: 18px;
+    border: 1px solid rgba(120,150,201,0.24);
+    background: linear-gradient(180deg, rgba(23,35,58,0.92), rgba(18,28,46,0.82));
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.prop-label {
+    color: #8fb2eb;
+    font-size: 11px;
+    font-weight: 700;
+}
+.prop-value {
+    margin-top: 6px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    word-break: break-word;
+}
+
+/* ========== 知识点头部 ========== */
+.knowledge-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 4px 12px;
+    border-bottom: 1px solid rgba(142,162,199,0.2);
+}
+.knowledge-head h2 {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+/* ========== 刷新按钮 ========== */
+.refresh-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: #2a5a8c;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.refresh-btn:hover {
+    background: #3a6a9c;
+}
+
+/* ========== 知识卡片网格 ========== */
+.fact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* ========== 知识卡片 ========== */
+.fact-card {
+    min-height: 152px;
+    border-radius: 20px;
+    border: 1px solid rgba(120,150,201,0.24);
+    background: linear-gradient(180deg, rgba(30,45,74,0.94), rgba(19,28,45,0.96));
+    padding: 12px 14px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.fact-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 800;
+}
+.fact-card p {
+    margin-top: 10px;
+    color: var(--text-main);
+    font-size: 14px;
+    line-height: 1.58;
+    font-weight: 600;
+}
+
+/* ========== 底部行星按钮栏 ========== */
+.planet-buttons {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 26px;
+    z-index: 35;
+    width: 92%;
+    max-width: 1460px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+}
+
+/* ========== 行星按钮 ========== */
+.planet-btn {
+    min-height: 68px;
+    border: 1px solid rgba(126,154,203,0.42);
+    border-radius: 18px;
+    background: rgba(17,27,45,0.92);
+    color: #d7deec;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    padding: 8px;
+}
+.planet-btn:hover {
+    background: rgba(30,45,70,0.92);
+}
+.planet-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.planet-btn small {
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ========== 返回按钮 ========== */
+.back-btn-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 40;
+}
+.back-btn {
+    padding: 10px 26px;
+    font-size: 15px;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    color: #fff;
+    background: #2a5a8c;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    outline: none;
+}
+
+/* ========== 平板 ========== */
+@media screen and (max-width: 1280px) {
+    .panel-left, .panel-right {
+        padding: 18px;
+    }
+    .prop-value {
+        font-size: 15px;
+    }
+    .fact-card p {
+        font-size: 12px;
+    }
+}
+
+/* ========== 手机与小平板 ========== */
+
+/* ========== 手机与小平板 ========== */
+
+/* ========== 手机与小平板 ========== */
+@media only screen and (max-width: 980px) {
+    body { overflow: hidden; }
+
+    #stars {
+        position: fixed; inset: 0;
+        width: 100vw; height: 100vh;
+        pointer-events: none;
+        z-index: 1;
+    }
+    #scene {
+        position: fixed; inset: 0;
+        width: 100vw; height: 100vh;
+        touch-action: none;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    /* ---- 底部行星按钮栏：横向滚动 ---- */
+    .planet-buttons {
+        position: fixed;
+        left: 0; right: 0; bottom: 0;
+        width: auto; transform: none;
+        z-index: 30;
+        display: flex; flex-flow: row nowrap;
+        overflow-x: auto; overflow-y: hidden;
+        gap: 8px;
+        padding: 8px 12px max(8px, env(safe-area-inset-bottom, 8px));
+        background: linear-gradient(0deg, rgba(3,6,13,0.92), transparent);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .planet-buttons::-webkit-scrollbar { display: none; }
+    .planet-btn {
+        flex: 0 0 auto;
+        min-height: 48px; min-width: 76px;
+        padding: 8px 12px;
+        border-radius: 16px;
+        font-size: 11px; font-weight: 700;
+        background: rgba(15,24,42,0.94);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(126,154,203,0.42);
+        color: #d7deec;
+        cursor: pointer;
+        letter-spacing: 0.02em;
+    }
+    .planet-btn small {
+        display: block; margin-top: 2px;
+        font-size: 9px;
+        color: var(--text-dim);
+    }
+    .planet-btn.active {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    /* ---- 面板容器 ---- */
+    .panel-left,
+    .panel-right {
+        position: fixed;
+        bottom: 68px;
+        z-index: 45;
+        max-height: 52vh;
+        overflow-y: auto;
+        margin: 0;
+        border-radius: 22px;
+        border: 1px solid var(--panel-line);
+        background: var(--panel-bg);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 22px 60px rgba(0,0,0,0.42);
+        padding: 12px 12px;
+    }
+
+    /* 左面板(信息) */
+    .panel-left {
+        left: 10px;
+        width: calc(40% - 15px);
+    }
+
+    /* 右面板(知识) */
+    .panel-right {
+        right: 10px;
+        width: calc(60% - 15px);
+    }
+
+    /* 左面板内容压缩 */
+    .panel-left .planet-hero {
+        border-radius: 14px;
+    }
+    .panel-left .planet-hero img {
+        max-height: 90px;
+        width: 100%;
+        object-fit: cover;
+    }
+    .panel-left .planet-hero-copy {
+        padding: 8px 10px;
+    }
+    .panel-left .planet-hero-copy p {
+        font-size: 9px;
+        letter-spacing: 0.16em;
+    }
+    .panel-left .planet-hero-copy h1 {
+        font-size: 18px;
+        margin-top: 4px;
+    }
+    .panel-left .panel-title {
+        font-size: 11px;
+        margin-top: 10px;
+        margin-bottom: 6px;
+    }
+    .panel-left .props-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+    }
+    .panel-left .prop-card {
+        min-height: 48px;
+        padding: 6px 8px;
+        border-radius: 12px;
+    }
+    .panel-left .prop-label {
+        font-size: 8px;
+    }
+    .panel-left .prop-value {
+        font-size: 11px;
+        margin-top: 3px;
+    }
+
+    /* 右面板内容压缩 */
+    .panel-right .knowledge-head {
+        padding: 0 2px 8px;
+    }
+    .panel-right .knowledge-head h2 {
+        font-size: 13px;
+    }
+    .panel-right .refresh-btn {
+        width: 28px; height: 28px;
+        font-size: 13px;
+    }
+    .panel-right .fact-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin-top: 8px;
+    }
+    .panel-right .fact-card {
+        min-height: 80px;
+        padding: 8px 10px;
+        border-radius: 14px;
+    }
+    .panel-right .fact-index {
+        width: 22px; height: 22px;
+        font-size: 9px;
+    }
+    .panel-right .fact-card p {
+        font-size: 11px;
+        margin-top: 6px;
+        line-height: 1.4;
+    }
+
+    /* ---- 返回按钮 ---- */
+    .back-btn-container {
+        position: fixed;
+        top: max(16px, env(safe-area-inset-top, 16px));
+        right: 16px;
+        z-index: 50;
+    }
+    .back-btn {
+        padding: 10px 18px;
+        min-width: 100px;
+        font-size: 12px;
+        border-radius: 12px;
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        color: #fff;
+        background: #2a5a8c;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        outline: none;
+    }
+}
+
+/* ========== 窄手机 ========== */
+@media only screen and (max-width: 420px) {
+    .planet-buttons {
+        padding: 6px 8px max(6px, env(safe-area-inset-bottom, 6px));
+        gap: 6px;
+    }
+    .planet-btn {
+        min-width: 68px;
+        min-height: 42px;
+        padding: 6px 10px;
+        font-size: 10px;
+        border-radius: 14px;
+    }
+    .planet-btn small { font-size: 8px; }
+
+    .panel-left,
+    .panel-right {
+        bottom: 62px;
+        padding: 10px 10px;
+        border-radius: 18px;
+        max-height: 48vh;
+    }
+    .panel-left {
+        left: 6px;
+        width: calc(40% - 12px);
+    }
+    .panel-right {
+        right: 6px;
+        width: calc(60% - 12px);
+    }
+
+    .panel-left .planet-hero img { max-height: 70px; }
+    .panel-left .planet-hero-copy h1 { font-size: 15px; }
+    .panel-left .prop-card { min-height: 40px; padding: 5px 6px; }
+    .panel-left .prop-value { font-size: 10px; }
+    .panel-left .prop-label { font-size: 7px; }
+
+    .panel-right .fact-card { min-height: 68px; padding: 6px 8px; }
+    .panel-right .fact-card p { font-size: 10px; }
+    .panel-right .fact-index { width: 20px; height: 20px; font-size: 8px; }
+
+    .back-btn { min-width: 80px; padding: 8px 14px; font-size: 10px; border-radius: 10px; }
+}
+
+
+

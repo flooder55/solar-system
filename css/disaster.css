@@ -1,0 +1,47 @@
+﻿.disaster-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.5); backdrop-filter: blur(6px);
+}
+
+.disaster-panel {
+    position: relative; width: min(88vw, 460px); padding: 24px 28px 20px;
+    border: 1.5px solid rgba(200,70,50,.35); border-radius: 16px;
+    background: linear-gradient(160deg, rgba(28,10,10,.97) 0%, rgba(16,6,18,.96) 100%);
+    box-shadow: 0 0 40px rgba(200,50,30,.18), 0 12px 36px rgba(0,0,0,.5);
+    color: #f0e4e4; font-family: "Microsoft YaHei","PingFang SC",sans-serif; text-align: center;
+}
+
+
+/* 标题颜色随危险等级变化 */
+.disaster-title { font-size: 23px; font-weight: 800; letter-spacing: .05em; margin-bottom: 6px; }
+.disaster-title.danger-extreme { color: #ff4444; }
+.disaster-title.danger-high    { color: #ff7043; }
+.disaster-title.danger-medium  { color: #ffab40; }
+
+.disaster-desc { font-size: 13px; color: #bfabab; line-height: 1.6; margin-bottom: 14px; }
+
+.disaster-attrs { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+/* 稀有度标签 */
+.rarity-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 12px; border-radius: 14px; font-size: 12px; font-weight: 700; letter-spacing: .03em;
+}
+.rarity-badge.common    { background: rgba(140,160,180,.2); color: #9ab4c8; border: 1px solid rgba(140,160,180,.3); }
+.rarity-badge.uncommon  { background: rgba(100,180,120,.2); color: #74c484; border: 1px solid rgba(100,180,120,.3); }
+.rarity-badge.rare      { background: rgba(200,140,60,.2);  color: #dca438; border: 1px solid rgba(200,140,60,.3); }
+.rarity-badge.legendary { background: rgba(200,60,180,.2);  color: #e268cc; border: 1px solid rgba(200,60,180,.3); }
+
+.danger-stars { display: flex; align-items: center; gap: 1px; font-size: 16px; }
+.danger-stars .star-on  { color: #ff5252; }
+.danger-stars .star-off { color: #4a3a3a; }
+
+
+.disaster-skip-hint { margin-top: 8px; font-size: 11px; color: rgba(200,180,180,.35); letter-spacing: .04em; }
+
+@media (max-width: 640px) {
+    .disaster-panel { padding: 18px 16px 16px; }
+    .disaster-title { font-size: 20px; }
+}
+

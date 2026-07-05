@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>探索太阳系获取知识</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/disaster.css">
+    <script src="js/three.min.js"></script>
+</head>
+<body>
+
+    <canvas id="stars"></canvas>
+
+    
+    <div class="back-btn-container">
+        <button class="back-btn" id="btnBack">返回银河</button>
+    </div>
+    <script>
+    document.getElementById('btnBack').addEventListener('click', function () {
+        location.href = 'index.html#back';
+    });
+    </script>
+
+    <script src="js/knowledge.js"></script>
+    <script src="js/panel-library.js"></script>
+    <script src="js/disaster.js"></script>
+    <script src="js/stars.js"></script>
+    <script src="js/scene.js"></script>
+
+</body>
+</html>
+
